@@ -1,6 +1,6 @@
 # Demo-Skript: Claude Code – Spezifikation → Tests → Quality Gates
 
-Dauer: ca. 50 Min. plus 10 Min. Puffer. Publikum: keine Claude-Code-, kaum Programmiererfahrung, M365-Copilot-Chat bekannt.
+Dauer: ca. 35 Min. plus 10 Min. Puffer. Publikum: keine Claude-Code-, kaum Programmiererfahrung, M365-Copilot-Chat bekannt.
 Alle Prompts zum Kopieren: [PROMPTS.md](PROMPTS.md)
 
 **Dieses Repo ist das Regiebuch.** Die Demo selbst läuft in einem separaten Projekt (`quadratic-demo`), das aus [vorlage/](vorlage/) erzeugt wird. Das Publikum sieht nur das Demo-Projekt, nie dieses Skript.
@@ -11,47 +11,42 @@ Alle Prompts zum Kopieren: [PROMPTS.md](PROMPTS.md)
 x₁,₂ = −p/2 ± √((p/2)² − q), Diskriminante D = (p/2)² − q
 D > 0: zwei Lösungen · D = 0: eine Lösung · D < 0: keine reelle Lösung
 
-Dramaturgisch nutzbar: Die Spezifikation legt die Formel vor dem ersten Code eindeutig fest.
-
-## Scope (bewusst reduziert)
-- Sprint 1: Backend (Lösung berechnen)
-- Sprint 2: Historie (wiederholbar, Liste) plus CSV-Export als reine Textfunktion
-- Sprint 3: Tabellarische Ausgabe im Terminal (CLI)
-- Bonus: Spezifikationsänderung live
-- Entfällt: Web-GUI (Risiko: Netzwerk, Ports, Installation, Browser)
+## Scope
+- Sprint 1: Backend (Lösung berechnen), inkl. Mutationstest
+- Sprint 2: Ergebnis der Berechnung als CSV-Text (Kopfzeile + eine Zeile, keine Historie, keine Datei)
+- Entfällt: Historie, CLI-Tabelle, Web-GUI, Spezifikationsänderung
 
 ## Vorbereitung (vorab)
-1. Demo-Projekt erzeugen: `./neues-demo-projekt.sh` (legt `../quadratic-demo` mit eigenem Git-Repo an). Ein anderer Zielpfad geht als Argument.
-2. Im Demo-Projekt: `sudo apt install python3.14-venv` (nur falls `python3 -m venv` fehlschlägt), dann `python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements-dev.txt`
+1. Demo-Projekt erzeugen: `./neues-demo-projekt.sh` (legt `../quadratic-demo` mit eigenem Git-Repo an).
+2. Im Demo-Projekt: `python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements-dev.txt` (falls venv fehlschlägt: `sudo apt install python3.14-venv`).
 3. Prüfen: `python -m ruff --version`, `python -m mypy --version`, `python -m pytest --version`
-4. **Generalprobe komplett im Demo-Projekt durchspielen** und nach jedem Sprint taggen: `sprint1-fertig`, `sprint2-fertig`, `sprint3-fertig`.
-5. **Zurücksetzen für die echte Demo:** Demo-Ordner löschen (`rm -rf ../quadratic-demo`) und `./neues-demo-projekt.sh` neu ausführen. Wer die Tags der Generalprobe als Notfall-Fallback behalten will, benennt den Ordner stattdessen um (z. B. `mv ../quadratic-demo ../quadratic-demo-probe`).
-6. Claude Code in `quadratic-demo` starten, nicht in diesem Repo.
+4. **Generalprobe komplett durchspielen** und taggen: `sprint1-fertig`, `sprint2-fertig`.
+5. **Zurücksetzen für die echte Demo:** Probe-Ordner umbenennen (`mv ../quadratic-demo ../quadratic-demo-probe`, Tags bleiben als Notfall-Fallback) und `./neues-demo-projekt.sh` neu ausführen, venv neu einrichten.
+6. Claude Code in `quadratic-demo` starten, nicht in diesem Repo. Modell vorher festlegen und nicht mehr wechseln.
 7. Terminal-Schrift ≥ 18 pt, Benachrichtigungen aus, Prompts aus PROMPTS.md bereit.
-8. **Gate-Ergebnis sichtbar:** Claude Code klappt Tool-Ausgaben ein („Ran 1 shell command“). Deshalb steht in `CLAUDE.md`, dass Claude `python check.py` selbst ausführt und das Ergebnis (✅/❌) wörtlich in seiner Antwort wiedergibt. Bei der Generalprobe prüfen, dass das in Schritt 1.2 (rot) und 1.3 (grün) auch so passiert. Sonst `python check.py` selbst im Terminal ausführen.
-9. Vor Prompt 1.2: `ls src/quadratic` darf nur `__init__.py` zeigen, sonst sind die Tests sofort grün.
-10. Hinweis: `check.py` ist bewusst schon vorhanden und läuft erst grün, wenn Tests und Code existieren. Ohne Tests meldet pytest „no tests ran“ (rot).
+8. **Gate-Ergebnis sichtbar:** Claude Code klappt Tool-Ausgaben ein („Ran 1 shell command“). Deshalb steht in `CLAUDE.md`, dass Claude `python check.py` selbst ausführt und das Ergebnis (✅/❌) wörtlich wiedergibt. In der Generalprobe prüfen. Sonst `python check.py` selbst im Terminal ausführen.
+9. Vor Prompt 1.2 und 2.2: `ls src/quadratic` prüfen. Vor 1.2 darf dort nur `__init__.py` stehen, sonst sind die Tests sofort grün.
+10. `check.py` ist bewusst schon vorhanden und ist rot, solange es keine Tests gibt („Keine Tests gefunden“).
 
 ## Ablauf
 
 | Zeit | Block |
 |---|---|
-| 0–8 | Einführung |
-| 8–25 | Sprint 1: Backend inkl. Mutationstest |
-| 25–37 | Sprint 2: Historie und CSV |
-| 37–45 | Sprint 3: CLI-Tabelle |
-| 45–52 | Bonus: Spezifikationsänderung |
-| 52–60 | Fazit, Fragen (Puffer) |
+| 0–5 | Einführung |
+| 5–20 | Sprint 1: Backend inkl. Mutationstest |
+| 20–30 | Sprint 2: CSV |
+| 30–35 | Fazit |
+| 35–45 | Puffer, Fragen |
 
-### Einführung (8 Min.)
+### Einführung (5 Min.)
 - Copilot-Chat: antwortet mit Text, du kopierst. Claude Code: arbeitet im Projektordner, liest, schreibt Dateien, startet Programme, korrigiert sich selbst.
 - Kreislauf als Bild: **Spezifikation → Tests → Code → Quality Gate** (rot: zurück zum Code, grün: fertig).
 - Kernbotschaft: **Wir müssen den Code nicht lesen können, wir müssen sagen können, was richtig ist.**
 - Analogie: Bauauftrag (Spezifikation), Abnahmeprotokoll (Tests), Bauabnahme (Quality Gate).
-- Kurz `CLAUDE.md` zeigen: Projektregeln werden einmal festgelegt. Danach `check.py` zeigen: das ist das Quality Gate.
+- Kurz `CLAUDE.md` zeigen (Regeln einmal festlegen) und `check.py` (das Quality Gate).
 
-### Sprint 1: Backend (17 Min.)
-1. **Spezifikation (3 Min.)** Prompt 1.1. Claude stellt Rückfragen: laut beantworten. Botschaft: Klärung vor Code ist billiger als Fehler danach.
+### Sprint 1: Backend (15 Min.)
+1. **Spezifikation (3 Min.)** Prompt 1.1. Claude stellt Rückfragen: laut beantworten. Botschaft: Klärung vor Code ist billiger als Fehler danach. `SPEC.md` kurz in der IDE zeigen.
    Erwartete Akzeptanzkriterien (Beispiele):
    - AK-1: p=−3, q=2 → (1, 2)
    - AK-2: p=2, q=1 → eine Lösung (−1)
@@ -59,26 +54,17 @@ Dramaturgisch nutzbar: Die Spezifikation legt die Formel vor dem ersten Code ein
    - AK-4: Jede Lösung erfüllt die Gleichung (Probe, Toleranz 1e-9)
    - AK-5: Nicht-endliche Eingaben (NaN, inf) → ValueError
    - AK-6: Lösungen aufsteigend sortiert
-2. **Tests zuerst (4 Min.)** Prompt 1.2. **Wow-Moment 1:** Rot ist gewollt: „So wissen wir, dass die Tests wirklich etwas prüfen.“
-3. **Implementieren (3 Min.)** Prompt 1.3. Zuschauen: Claude liest Fehlermeldungen und korrigiert selbst.
-4. **Quality Gate (2 Min.)** `python check.py` → ✅ BESTANDEN.
-5. **Mutationstest (5 Min.) – stärkster Moment.** Vorzeichen in solver.py kippen, `python check.py` → ❌ AK-1 rot. „Ich habe Code manipuliert, ohne ihn lesen zu müssen, das Gate merkt es sofort.“ Zurück: `git checkout src/`.
-6. Still sichern (Prompt-Datei 1.4): `git add -A && git commit -m "Sprint 1"`. Tag nur in der Generalprobe.
+2. **Tests zuerst (3 Min.)** Prompt 1.2. **Wow-Moment 1:** Rot ist gewollt: „So wissen wir, dass die Tests wirklich etwas prüfen.“
+3. **Implementieren (3 Min.)** Prompt 1.3. Claude liest Fehlermeldungen und korrigiert selbst. Gate ✅.
+4. Still sichern (Prompt 1.4), `git status --short` leer.
+5. **Mutationstest (5 Min.) – stärkster Moment.** In der IDE ein Vorzeichen kippen, speichern, selbst `python check.py` → ❌. „Ich habe Code manipuliert, ohne ihn lesen zu müssen, das Gate merkt es sofort.“ Zurück: `git checkout src/`, Gate wieder ✅. Tag nur in der Generalprobe.
 
-### Sprint 2: Historie und CSV (12 Min.)
-1. **Spezifikation (3 Min.)** Prompt 2.1. Claude muss entscheiden: Semikolon + Dezimalkomma oder Komma + Dezimalpunkt. Frage ans Publikum: „Wer hat eine CSV schon mal in Excel geöffnet, und alles stand in einer Spalte?“ Spezifikationen beseitigen solche Überraschungen.
-2. **Tests zuerst (rot) und Implementierung (7 Min.)** Prompt 2.2, dann 2.3.
-3. **Quality Gate (2 Min.)**, `git tag sprint2-fertig`.
+### Sprint 2: Ergebnis als CSV (10 Min.)
+1. `/clear`. **Spezifikation (3 Min.)** Prompt 2.1. Claude muss entscheiden: Semikolon + Dezimalkomma oder Komma + Dezimalpunkt. Frage ans Publikum: „Wer hat eine CSV schon mal in Excel geöffnet, und alles stand in einer Spalte?“ Spezifikationen beseitigen solche Überraschungen.
+2. **Tests (rot) und Implementierung (5 Min.)** Prompt 2.2, dann 2.3.
+3. **Vorführen (2 Min.)** Prompt 2.4. CSV-Text markieren, in Excel einfügen. Tag `sprint2-fertig` nur in der Generalprobe.
 
-### Sprint 3: CLI-Tabelle (8 Min.)
-1. **Spezifikation (2 Min.)** Prompt 3.1.
-2. **Tests zuerst (rot) und Implementierung (4 Min.)** Prompt 3.2, dann 3.3.
-3. **Vorführen (2 Min.)** (Ausführung steckt in Prompt 3.3) `python demo_cli.py`: Tabelle mit fünf Beispielen (zwei/eine/keine Lösung) und CSV-Ausgabe. CSV markieren, in Excel einfügen. `git tag sprint3-fertig`.
-
-### Bonus: Spezifikationsänderung (7 Min.)
-Prompt „absteigend sortieren“. Reihenfolge betonen: **SPEC → Tests → Code.** Die Tests schlagen zuerst fehl (neue Regel), dann werden sie grün. Botschaft: Änderungen sind sicher, weil das Gate sofort zeigt, was betroffen ist. Falls die Zeit knapp ist, diesen Block als Erstes streichen.
-
-### Fazit (8 Min.)
+### Fazit (5 Min.)
 1. **Spezifikation** = „Was soll richtig sein?“ (menschliche Aufgabe)
 2. **Tests** = „Ist es richtig?“ (maschinell, wiederholbar)
 3. **Quality Gate** = „Darf es weiter?“ (automatisch, unbestechlich)
@@ -86,20 +72,22 @@ Prompt „absteigend sortieren“. Reihenfolge betonen: **SPEC → Tests → Cod
 Brücke in den Alltag: Spezifikation, Prüfkriterien und Abnahme funktionieren auch für Excel-Auswertungen, Berichte und Prozesse.
 Ehrlich bleiben: KI-Code ist nicht automatisch richtig. **Die Qualität kommt aus den Tests, nicht aus dem Modell.**
 
+## Notausgang bei Zeitnot
+Nach Sprint 1 abbrechen und zum Fazit springen: Der Kern (Spezifikation, rote Tests, Code, grünes Gate, Mutationstest) ist gezeigt. Optional im Probe-Ordner `git checkout sprint2-fertig` und das fertige CSV zeigen (offen sagen: „vorher vorbereitet“).
+
 ## Risiken und Gegenmaßnahmen
 
 | Risiko | Gegenmaßnahme |
 |---|---|
-| Claude braucht zu lange | Generalprobe mit Stoppuhr. Fallback: Git-Tag. |
+| Claude braucht zu lange | Generalprobe mit Stoppuhr. Fallback: Git-Tag im Probe-Ordner. |
 | Ergebnis weicht vom Probelauf ab | Das ist ein Feature: Das Gate fängt Abweichungen ab. Offen sagen. |
 | Berechtigungsdialoge | Vorab typische Freigaben erlauben (`/fewer-permission-prompts`). Sonst kurz erklären: „Claude fragt, bevor es etwas ausführt.“ |
-| Kontext wird lang | `/clear` zwischen den Sprints |
 | Netzwerk fällt aus | Hotspot, Screenshots/Video des Probelaufs als Plan C |
 | Beamer-Lesbarkeit | Schrift groß, jeweils nur das Wichtige zeigen |
 
 ## Checkliste Generalprobe
 - [ ] Gesamtdurchlauf mit Stoppuhr
-- [ ] Drei Tags gesetzt, Wiederherstellung getestet
-- [ ] Mutationsbeispiel geübt (Zeile notiert)
-- [ ] Prompts aus PROMPTS.md bereit
+- [ ] Beide Tags gesetzt, Wiederherstellung getestet
+- [ ] Mutationszeile notiert
+- [ ] Gate-Ergebnis erscheint in Claudes Antwort
 - [ ] Anmeldung bei Claude Code und Netzwerk vorher getestet
