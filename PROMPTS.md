@@ -13,12 +13,12 @@ Lies CLAUDE.md. Ich möchte die Gleichung x² + p·x + q = 0 lösen. Erstelle ei
 
 **1.2 Tests zuerst**
 ```
-Schreibe auf Basis der SPEC.md pytest-Tests in tests/, einen pro Akzeptanzkriterium, mit der AK-Nummer im Testnamen. Ergänze einen Test mit vielen Zufallswerten, der die Probe (Einsetzen in die Gleichung) prüft. Implementiere noch nichts. Führe die Tests aus und zeige, dass sie fehlschlagen.
+Schreibe auf Basis der SPEC.md pytest-Tests in tests/, einen pro Akzeptanzkriterium, mit der AK-Nummer im Testnamen. Ergänze einen Test mit vielen Zufallswerten, der die Probe (Einsetzen in die Gleichung) prüft. Implementiere noch nichts. Führe `python check.py` aus und gib das Ergebnis wörtlich in deiner Antwort wieder; es muss rot sein.
 ```
 
 **1.3 Implementieren**
 ```
-Implementiere jetzt src/quadratic/solver.py so, dass alle Tests grün werden. Führe danach `python check.py` aus und behebe alle Probleme.
+Implementiere jetzt src/quadratic/solver.py so, dass alle Tests grün werden. Führe danach `python check.py` aus, behebe alle Probleme und gib das Endergebnis des Gates wörtlich in deiner Antwort wieder.
 ```
 
 **1.5 Mutationstest (manuell):** in solver.py ein Vorzeichen kippen (z. B. `-p / 2` → `+p / 2`), dann `python check.py` → rot. Zurück mit `git checkout src/`.

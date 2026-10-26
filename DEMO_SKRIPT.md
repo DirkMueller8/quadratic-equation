@@ -28,7 +28,9 @@ Dramaturgisch nutzbar: Die Spezifikation legt die Formel vor dem ersten Code ein
 5. **Zurücksetzen für die echte Demo:** Demo-Ordner löschen (`rm -rf ../quadratic-demo`) und `./neues-demo-projekt.sh` neu ausführen. Wer die Tags der Generalprobe als Notfall-Fallback behalten will, benennt den Ordner stattdessen um (z. B. `mv ../quadratic-demo ../quadratic-demo-probe`).
 6. Claude Code in `quadratic-demo` starten, nicht in diesem Repo.
 7. Terminal-Schrift ≥ 18 pt, Benachrichtigungen aus, Prompts aus PROMPTS.md bereit.
-8. Hinweis: `check.py` ist bewusst schon vorhanden und läuft erst grün, wenn Tests und Code existieren. Ohne Tests meldet pytest „no tests ran“ (rot).
+8. **Gate-Ergebnis sichtbar:** Claude Code klappt Tool-Ausgaben ein („Ran 1 shell command“). Deshalb steht in `CLAUDE.md`, dass Claude `python check.py` selbst ausführt und das Ergebnis (✅/❌) wörtlich in seiner Antwort wiedergibt. Bei der Generalprobe prüfen, dass das in Schritt 1.2 (rot) und 1.3 (grün) auch so passiert. Sonst `python check.py` selbst im Terminal ausführen.
+9. Vor Prompt 1.2: `ls src/quadratic` darf nur `__init__.py` zeigen, sonst sind die Tests sofort grün.
+10. Hinweis: `check.py` ist bewusst schon vorhanden und läuft erst grün, wenn Tests und Code existieren. Ohne Tests meldet pytest „no tests ran“ (rot).
 
 ## Ablauf
 

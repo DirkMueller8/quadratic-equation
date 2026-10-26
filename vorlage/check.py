@@ -9,6 +9,8 @@ import sys
 
 MIN_COVERAGE = 90
 NO_TESTS_EXIT_CODE = 5  # pytest: es wurden keine Tests gefunden
+MAX_LINES = 12
+KEY_PREFIXES = ("E ", "FAILED ", "ERROR ", "FAIL ")  # pytest: Fehlerzeile, Zusammenfassung
 
 STEPS = [
     ("Stil (ruff)", [sys.executable, "-m", "ruff", "check", "src", "tests"]),
@@ -26,6 +28,13 @@ STEPS = [
 ]
 
 
+def compact(output: str) -> list[str]:
+    """Nur die aussagekräftigen Zeilen (Fehler, FAILED, Abdeckung), maximal MAX_LINES."""
+    lines = output.splitlines()
+    key = [line for line in lines if line.lstrip().startswith(KEY_PREFIXES)]
+    return (key or lines)[:MAX_LINES]
+
+
 def run_step(name: str, cmd: list[str]) -> bool:
     # Kein Bytecode-Cache: Eine Code-Änderung wird immer sofort wirksam
     env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
@@ -38,7 +47,7 @@ def run_step(name: str, cmd: list[str]) -> bool:
     if result.returncode == NO_TESTS_EXIT_CODE or "no tests ran" in output:
         print("     Keine Tests gefunden: Es gibt nichts, was den Code prüft.")
     else:
-        for line in output.splitlines()[-25:]:
+        for line in compact(output):
             print(f"     {line}")
     return False
 
