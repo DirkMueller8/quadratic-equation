@@ -63,17 +63,17 @@ Dramaturgisch nutzbar: Die Spezifikation legt die Formel vor dem ersten Code ein
 3. **Implementieren (3 Min.)** Prompt 1.3. Zuschauen: Claude liest Fehlermeldungen und korrigiert selbst.
 4. **Quality Gate (2 Min.)** `python check.py` → ✅ BESTANDEN.
 5. **Mutationstest (5 Min.) – stärkster Moment.** Vorzeichen in solver.py kippen, `python check.py` → ❌ AK-1 rot. „Ich habe Code manipuliert, ohne ihn lesen zu müssen, das Gate merkt es sofort.“ Zurück: `git checkout src/`.
-6. `git commit`, `git tag sprint1-fertig`.
+6. Still sichern (Prompt-Datei 1.4): `git add -A && git commit -m "Sprint 1"`. Tag nur in der Generalprobe.
 
 ### Sprint 2: Historie und CSV (12 Min.)
 1. **Spezifikation (3 Min.)** Prompt 2.1. Claude muss entscheiden: Semikolon + Dezimalkomma oder Komma + Dezimalpunkt. Frage ans Publikum: „Wer hat eine CSV schon mal in Excel geöffnet, und alles stand in einer Spalte?“ Spezifikationen beseitigen solche Überraschungen.
-2. **Test-first + Implementierung (7 Min.)** Prompt 2.2.
+2. **Tests zuerst (rot) und Implementierung (7 Min.)** Prompt 2.2, dann 2.3.
 3. **Quality Gate (2 Min.)**, `git tag sprint2-fertig`.
 
 ### Sprint 3: CLI-Tabelle (8 Min.)
 1. **Spezifikation (2 Min.)** Prompt 3.1.
-2. **Test-first + Implementierung (4 Min.)** Prompt 3.2.
-3. **Vorführen (2 Min.)** `python demo_cli.py`: Tabelle mit fünf Beispielen (zwei/eine/keine Lösung) und CSV-Ausgabe. CSV markieren, in Excel einfügen. `git tag sprint3-fertig`.
+2. **Tests zuerst (rot) und Implementierung (4 Min.)** Prompt 3.2, dann 3.3.
+3. **Vorführen (2 Min.)** (Ausführung steckt in Prompt 3.3) `python demo_cli.py`: Tabelle mit fünf Beispielen (zwei/eine/keine Lösung) und CSV-Ausgabe. CSV markieren, in Excel einfügen. `git tag sprint3-fertig`.
 
 ### Bonus: Spezifikationsänderung (7 Min.)
 Prompt „absteigend sortieren“. Reihenfolge betonen: **SPEC → Tests → Code.** Die Tests schlagen zuerst fehl (neue Regel), dann werden sie grün. Botschaft: Änderungen sind sicher, weil das Gate sofort zeigt, was betroffen ist. Falls die Zeit knapp ist, diesen Block als Erstes streichen.
