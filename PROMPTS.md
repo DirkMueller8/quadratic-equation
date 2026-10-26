@@ -1,5 +1,7 @@
 # Prompts zum Kopieren (in dieser Reihenfolge)
 
+Alle Befehle gelten im Demo-Projekt (`quadratic-demo`), nicht in diesem Regiebuch-Repo.
+
 Tipp: Vor jedem Sprint `/clear`. Das Wissen steckt in CLAUDE.md und SPEC.md.
 
 ## Sprint 1: Backend

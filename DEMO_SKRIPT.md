@@ -3,6 +3,8 @@
 Dauer: ca. 50 Min. plus 10 Min. Puffer. Publikum: keine Claude-Code-, kaum Programmiererfahrung, M365-Copilot-Chat bekannt.
 Alle Prompts zum Kopieren: [PROMPTS.md](PROMPTS.md)
 
+**Dieses Repo ist das Regiebuch.** Die Demo selbst läuft in einem separaten Projekt (`quadratic-demo`), das aus [vorlage/](vorlage/) erzeugt wird. Das Publikum sieht nur das Demo-Projekt, nie dieses Skript.
+
 ## Wichtig vorab: die Formel
 `y = x*x + p + q` ist vermutlich ein Tippfehler. Gemeint: **y = x² + p·x + q**, gelöst wird y = 0.
 
@@ -19,13 +21,14 @@ Dramaturgisch nutzbar: Die Spezifikation legt die Formel vor dem ersten Code ein
 - Entfällt: Web-GUI (Risiko: Netzwerk, Ports, Installation, Browser)
 
 ## Vorbereitung (vorab)
-1. `sudo apt install python3.14-venv` (nur falls `python3 -m venv` fehlschlägt)
-2. `python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements-dev.txt`
+1. Demo-Projekt erzeugen: `./neues-demo-projekt.sh` (legt `../quadratic-demo` mit eigenem Git-Repo an). Ein anderer Zielpfad geht als Argument.
+2. Im Demo-Projekt: `sudo apt install python3.14-venv` (nur falls `python3 -m venv` fehlschlägt), dann `python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements-dev.txt`
 3. Prüfen: `python -m ruff --version`, `python -m mypy --version`, `python -m pytest --version`
-4. `git init`, erster Commit mit dem Gerüst (CLAUDE.md, check.py, pyproject.toml, …)
-5. **Generalprobe komplett durchspielen** und nach jedem Sprint taggen: `sprint1-fertig`, `sprint2-fertig`, `sprint3-fertig`. Danach zurück zum Gerüst-Commit (`git reset --hard <gerüst-commit>`; Tags bleiben erhalten).
-6. Terminal-Schrift ≥ 18 pt, Benachrichtigungen aus, Prompts aus PROMPTS.md bereit.
-7. Hinweis: `check.py` ist bewusst schon vorhanden und läuft erst grün, wenn Tests und Code existieren. Ohne Tests meldet pytest „no tests ran“ (rot).
+4. **Generalprobe komplett im Demo-Projekt durchspielen** und nach jedem Sprint taggen: `sprint1-fertig`, `sprint2-fertig`, `sprint3-fertig`.
+5. **Zurücksetzen für die echte Demo:** Demo-Ordner löschen (`rm -rf ../quadratic-demo`) und `./neues-demo-projekt.sh` neu ausführen. Wer die Tags der Generalprobe als Notfall-Fallback behalten will, benennt den Ordner stattdessen um (z. B. `mv ../quadratic-demo ../quadratic-demo-probe`).
+6. Claude Code in `quadratic-demo` starten, nicht in diesem Repo.
+7. Terminal-Schrift ≥ 18 pt, Benachrichtigungen aus, Prompts aus PROMPTS.md bereit.
+8. Hinweis: `check.py` ist bewusst schon vorhanden und läuft erst grün, wenn Tests und Code existieren. Ohne Tests meldet pytest „no tests ran“ (rot).
 
 ## Ablauf
 
