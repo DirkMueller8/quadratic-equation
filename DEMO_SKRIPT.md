@@ -61,7 +61,7 @@ Sonst `python check.py` selbst im Terminal ausführen.
 
 2. **Tests (rot) und Implementierung (5 Min.)** Prompt 2.2, dann 2.3.
 
-3. **Vorführen (2 Min.)** Prompt 2.4. CSV-Zeilen aus dem Terminal markieren und in Excel einfügen.
+3. **Vorführen (2 Min.)** Prompt 2.4. Die CSV-Zeilen kopierst du **manuell** aus dem Terminal und fügst sie in Excel ein. Das Skript schreibt keine Datei und überträgt nichts selbst. Das zeigt dem Publikum, dass der Schritt zum Excel-Import ganz normal von Hand passiert.
 
 ### Fazit (5 Min.)
 1. **Spezifikation** = „Was soll richtig sein?“ (menschliche Aufgabe)
