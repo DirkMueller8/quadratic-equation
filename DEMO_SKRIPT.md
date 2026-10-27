@@ -13,10 +13,10 @@ D > 0: zwei Lösungen · D = 0: eine Lösung · D < 0: keine reelle Lösung
 
 ## Scope
 - Sprint 1: Backend (Lösung berechnen), inkl. Mutationstest
-- Sprint 2: Datei `ergebnis.csv` mit Kopfzeile. Testfälle und manuelle Eingaben werden Zeile für Zeile angehängt.
+- Sprint 2: Ergebnis als CSV-Text im Terminal (Kopfzeile + Datenzeile), keine Datei.
 
 ## Vorbereitung (vorab)
-1. **Zurücksetzen für die echte Demo:** Probe-Ordner löschen und umbenennen von hier aus im Terminal (`rm -rf ./quadratic-demo-probe && mv ./quadratic-demo ./quadratic-demo-probe`) und `./neues-demo-projekt.sh`, venv neu einrichten.
+1. **Zurücksetzen für die echte Demo:** Probe-Ordner löschen und umbenennen von hier aus im Terminal (`rm -rf ../quadratic-demo-probe && mv ../quadratic-demo ../quadratic-demo-probe`).
 
 2. Demo-Projekt von hier aus im Terminal erzeugen: `./neues-demo-projekt.sh` (legt `../quadratic-demo` mit eigenem Git-Repo an).
 
@@ -61,7 +61,7 @@ Sonst `python check.py` selbst im Terminal ausführen.
 
 2. **Tests (rot) und Implementierung (5 Min.)** Prompt 2.2, dann 2.3.
 
-3. **Vorführen (2 Min.)** Prompt 2.4. Startskript zweimal manuell laufen lassen, danach `ergebnis.csv` in Excel öffnen: Zeile für Zeile kommt dazu.
+3. **Vorführen (2 Min.)** Prompt 2.4. CSV-Zeilen aus dem Terminal markieren und in Excel einfügen.
 
 ### Fazit (5 Min.)
 1. **Spezifikation** = „Was soll richtig sein?“ (menschliche Aufgabe)
