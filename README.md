@@ -42,7 +42,7 @@ In der Vorlage:
     Spezifikation  →  Tests (zuerst rot)  →  Code  →  Quality Gate (grün)
 
 1. **Spezifikation:** Claude Code schreibt aus einer groben Beschreibung eine `SPEC.md` mit nummerierten Akzeptanzkriterien (AK-1, AK-2 …).
-2. **Tests zuerst:** Die Tests entstehen aus der Spezifikation, bevor es Code gibt. Sie müssen rot sein. Das zeigt, dass sie wirklich etwas prüfen.
+2. **Tests zuerst:** Die Tests entstehen aus der Spezifikation, bevor es Code gibt. So gibt Test-Driven Development es vor. Die ersten Test müssen rot sein. Das zeigt, dass sie wirklich etwas prüfen.
 3. **Code:** Claude Code implementiert, bis alle Tests grün sind.
 4. **Quality Gate:** `python check.py` prüft Stil, Typen, Tests und Abdeckung. Nur wenn alles grün ist, gilt ein Schritt als fertig.
 5. **Mutationstest:** Ein absichtlicher Fehler im Code (z. B. ein Vorzeichen) muss das Gate rot werden lassen. So sieht man, dass die Tests den Fehler tatsächlich finden.
@@ -69,10 +69,6 @@ python check.py
 ```
 
 Das Demo-Projekt ist bewusst getrennt vom Repo. So bleibt die Vorlage sauber, und du kannst die Demo beliebig oft neu durchspielen.
-
-## Hinweis zur Formel
-
-In einer frühen Fassung stand `y = x*x + p + q`. Gemeint ist `y = x² + p·x + q`, denn ohne `x` bei `p` gäbe es nichts zu lösen. Die Spezifikation legt die Formel vor dem ersten Code eindeutig fest. Das ist auch ein Beispiel dafür, warum Klärung vor Code wichtig ist.
 
 ## Lizenz
 
