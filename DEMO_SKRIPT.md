@@ -18,7 +18,8 @@ D > 0: zwei Lösungen · D = 0: eine Lösung · D < 0: keine reelle Lösung
 ## Vorbereitung (vorab)
 1. **Zurücksetzen für die echte Demo:** Probe-Ordner löschen und umbenennen von hier aus im Terminal (`rm -rf ../quadratic-demo-probe && mv ../quadratic-demo ../quadratic-demo-probe`).
 
-2. Demo-Projekt von hier aus im Terminal erzeugen: `./neues-demo-projekt.sh` (legt `../quadratic-demo` mit eigenem Git-Repo an).
+2. Demo-Projekt von hier aus im Terminal erzeugen: 
+`./neues-demo-projekt.sh` (legt `../quadratic-demo` mit eigenem Git-Repo an).
 
 3. Neues VS Code `quadratic-demo` öffnen, NICHT in diesem Repo. Terminal öffnen und `Claude` im Prompt eingeben. Danach: `python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements-dev.txt` (falls venv fehlschlägt: `sudo apt install python3.14-venv`).
 
@@ -38,7 +39,7 @@ Sonst `python check.py` selbst im Terminal ausführen.
 - Kreislauf als Bild: **Spezifikation → Tests → Code → Quality Gate** (rot: zurück zum Code, grün: fertig).
 - Kernbotschaft: **Wir müssen den Code nicht lesen können, wir müssen sagen können, was richtig ist.**
 - Analogie: Bauauftrag (Spezifikation), Abnahmeprotokoll (Tests), Bauabnahme (Quality Gate).
-- Kurz `CLAUDE.md` zeigen (Regeln einmal festlegen) und `check.py` (das Quality Gate).
+- Kurz `CLAUDE.md` zeigen (Regeln einmal festlegen, darunter die **Leitplanken**: Tests nie abschwächen, Gate nicht umgehen) und `check.py` (das Quality Gate).
 
 ### Sprint 1: Backend (15 Min.)
 1. **Spezifikation (3 Min.)** Prompt 1.1. Claude stellt Rückfragen: laut beantworten. Botschaft: Klärung vor Code ist billiger als Fehler danach. `SPEC.md` kurz in der IDE zeigen.
@@ -70,6 +71,8 @@ Sonst `python check.py` selbst im Terminal ausführen.
 
 Brücke in den Alltag: Spezifikation, Prüfkriterien und Abnahme funktionieren auch für Excel-Auswertungen, Berichte und Prozesse.
 Ehrlich bleiben: KI-Code ist nicht automatisch richtig. **Die Qualität kommt aus den Tests, nicht aus dem Modell.**
+
+**Grenze der Leitplanken (Einwand aus dem Publikum):** Regeln in `CLAUDE.md` sind Anweisungen an das Modell, keine Garantie. Die KI kann sie ignorieren und aus den Regeln ausbrechen. Deshalb zwei Schichten: die Regel als Bitte, dazu das Gate als technische Prüfung, die Abweichungen sichtbar macht. Auch das Gate liegt im Projekt. Darum prüft ein Mensch `git diff` auf Änderungen an `check.py`, `pyproject.toml` und den Tests. Stärkere Absicherung, hier nicht umgesetzt: Berechtigungsregeln in Claude Code, die Änderungen an `check.py` verbieten, und ein Gate in CI außerhalb der Reichweite der KI.
 
 ## Notausgang bei Zeitnot
 Nach Sprint 1 abbrechen und zum Fazit springen: Der Kern (Spezifikation, rote Tests, Code, grünes Gate, Mutationstest) ist gezeigt. Optional im Probe-Ordner `git checkout sprint2-fertig` und das fertige CSV zeigen (offen sagen: „vorher vorbereitet“).

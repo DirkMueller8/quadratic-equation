@@ -8,6 +8,12 @@
 - Keine neuen Abhängigkeiten ohne Rückfrage. Nur Python-Standardbibliothek für den Produktivcode.
 - Änderungen an Verhalten: erst SPEC.md, dann Tests, dann Code.
 
+## Leitplanken (haben Vorrang)
+- Tests nie abschwächen, löschen oder auskommentieren, um das Gate grün zu machen. Rot heißt: Der Code ist falsch, bis das Gegenteil bewiesen ist.
+- Keine Warnungen unterdrücken (`# noqa`, `# type: ignore`) und `check.py` sowie `pyproject.toml` nicht ändern, um das Gate zu bestehen.
+- Gleitkommazahlen nie mit `==` vergleichen. Die Toleranz steht in der SPEC, in Tests gilt `pytest.approx`.
+- Widerspricht eine Anforderung einer Leitplanke: anhalten und fragen.
+
 ## Quality Gate sichtbar machen (wichtig für Live-Demos)
 Die Tool-Ausgabe ist im Terminal eingeklappt. Deshalb gilt:
 - Führe `python check.py` nach **jeder** Änderung an Tests oder Code selbst aus, auch ohne Aufforderung. Nie nur `pytest` allein.
@@ -21,6 +27,9 @@ Die Tool-Ausgabe ist im Terminal eingeklappt. Deshalb gilt:
 - `tests/` pytest-Tests
 - `check.py` Quality Gate (ruff, mypy, pytest + Abdeckung ≥ 90 %)
 - `SPEC.md` Spezifikation (wird sprintweise erweitert)
+
+## Umgebung
+- Python ≥ 3.11, venv aktivieren (`source .venv/bin/activate`), bevor Befehle laufen.
 
 ## Befehle
 - Quality Gate: `python check.py`

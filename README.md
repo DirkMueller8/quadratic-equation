@@ -31,7 +31,7 @@ Die Diskriminante D = (p/2)² − q entscheidet:
 
 In der Vorlage:
 
-- `CLAUDE.md`: Projektregeln, die Claude Code bei jedem Start liest (Sprache, Test-first, Quality Gate)
+- `CLAUDE.md`: Projektregeln, die Claude Code bei jedem Start liest (Sprache, Test-first, Quality Gate, Leitplanken)
 - `check.py`: das Quality Gate. Es führt ruff (Stil), mypy (Typen) und pytest (Tests, mindestens 90 % Abdeckung) aus und zeigt pro Schritt ✅ oder ❌
 - `pyproject.toml`, `requirements-dev.txt`: Konfiguration und Entwicklungswerkzeuge
 - `src/quadratic/`: hier entsteht der Code, zu Beginn nur eine leere `__init__.py`
@@ -39,7 +39,15 @@ In der Vorlage:
 
 ## Ablauf: der Kreislauf
 
-    Spezifikation  →  Tests (zuerst rot)  →  Code  →  Quality Gate (grün)
+```mermaid
+flowchart LR
+    S["Spezifikation<br/>SPEC.md mit AK-1, AK-2 …"] --> T["Tests zuerst<br/>müssen rot sein"]
+    T --> C["Code<br/>bis alle Tests grün sind"]
+    C --> G{"Quality Gate<br/>python check.py"}
+    G -- "rot" --> C
+    G -- "grün" --> F["Fertig"]
+    L["Leitplanken in CLAUDE.md<br/>Tests nie abschwächen"] -.-> C
+```
 
 1. **Spezifikation:** Claude Code schreibt aus einer groben Beschreibung eine `SPEC.md` mit nummerierten Akzeptanzkriterien (AK-1, AK-2 …).
 2. **Tests zuerst:** Die Tests entstehen aus der Spezifikation, bevor es Code gibt. So gibt Test-Driven Development es vor. Die ersten Test müssen rot sein. Das zeigt, dass sie wirklich etwas prüfen.
@@ -47,12 +55,23 @@ In der Vorlage:
 4. **Quality Gate:** `python check.py` prüft Stil, Typen, Tests und Abdeckung. Nur wenn alles grün ist, gilt ein Schritt als fertig.
 5. **Mutationstest:** Ein absichtlicher Fehler im Code (z. B. ein Vorzeichen) muss das Gate rot werden lassen. So sieht man, dass die Tests den Fehler tatsächlich finden.
 
+## Leitplanken und ihre Grenzen
+
+In `vorlage/CLAUDE.md` stehen Regeln, die Vorrang haben:
+
+- Tests nie abschwächen, löschen oder auskommentieren, um das Gate grün zu machen
+- Keine Warnungen unterdrücken (`# noqa`, `# type: ignore`) und `check.py` sowie `pyproject.toml` nicht ändern
+- Gleitkommazahlen nie mit `==` vergleichen, die Toleranz steht in der Spezifikation
+- Bei Widerspruch zwischen Anforderung und Leitplanke anhalten und fragen
+
+**Wichtig:** Das sind Anweisungen an das Modell, keine Garantie. Eine KI kann Regeln ignorieren oder aus ihnen ausbrechen. Deshalb gibt es zwei Schichten: die Regel als Bitte und das Quality Gate als technische Prüfung, die Abweichungen sichtbar macht. Auch das Gate liegt im Projekt. Ein Mensch prüft darum mit `git diff`, ob `check.py`, `pyproject.toml` oder Tests verändert wurden. Stärkere Absicherung, die diese Demo nicht umsetzt: Berechtigungsregeln in Claude Code, die Änderungen an `check.py` verbieten, und ein Gate in CI, das außerhalb der Reichweite der KI läuft.
+
 ## Schnellstart
 
 Voraussetzungen: Python 3.11 oder neuer, Git, Bash und ein Zugang zu Claude Code.
 
 ```bash
-git clone https://github.com/<benutzer>/quadratic-equation.git
+git clone https://github.com/DirkMueller8/quadratic-equation.git
 cd quadratic-equation
 ./neues-demo-projekt.sh          # legt ../quadratic-demo an
 cd ../quadratic-demo
@@ -69,6 +88,10 @@ python check.py
 ```
 
 Das Demo-Projekt ist bewusst getrennt vom Repo. So bleibt die Vorlage sauber, und du kannst die Demo beliebig oft neu durchspielen.
+
+## Weiterführend
+
+Die ausführliche Variante dieser Methode, mit Plan-Freigabe vor dem Bauen, Leitplanken nach ISO/IEC 24772, Anforderungen nach EARS und einem Lernlog, steht im Repo [cleancode](https://github.com/DirkMueller8/cleancode). Diese Demo ist die auf 30 Minuten gekürzte Fassung davon.
 
 ## Lizenz
 

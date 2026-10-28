@@ -9,7 +9,7 @@ Das Gate-Ergebnis (✅/❌) soll in Claudes Antwort stehen. Falls nicht: selbst 
 
 **1.1 Spezifikation**
 ```
-Lies CLAUDE.md. Ich möchte die Gleichung x² + p·x + q = 0 lösen. Erstelle eine SPEC.md für Sprint 1 mit: Zweck, Eingaben/Ausgaben, Fallunterscheidung (zwei/eine/keine reelle Lösung). Ignoriere Randfälle wie sehr kleine oder sehr grosse Zahlen in Input oder Output, oder leeren Input. Nummeriere die Fälle und errichte Akzeptanzkriterien (AK-1, AK-2 …). Schreibe noch keinen Code. Stelle mir Rückfragen, falls etwas unklar ist.
+Lies CLAUDE.md. Ich möchte die Gleichung x² + p·x + q = 0 lösen. Erstelle eine SPEC.md für Sprint 1 mit: Zweck, Eingaben/Ausgaben, Fallunterscheidung (zwei/eine/keine reelle Lösung). Ignoriere Randfälle wie sehr kleine oder sehr grosse Zahlen in Input oder Output, oder leeren Input. Lege fest, mit welcher Toleranz der Fall „genau eine Lösung“ erkannt wird. Nummeriere die Fälle und errichte Akzeptanzkriterien (AK-1, AK-2 …). Schreibe noch keinen Code. Stelle mir Rückfragen, falls etwas unklar ist.
 ```
 
 **1.2 Tests zuerst** (vorher prüfen: `ls src/quadratic` zeigt nur `__init__.py`)
