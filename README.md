@@ -93,6 +93,19 @@ Das Demo-Projekt ist bewusst getrennt vom Repo. So bleibt die Vorlage sauber, un
 
 Die ausführliche Variante dieser Methode, mit Plan-Freigabe vor dem Bauen, Leitplanken nach ISO/IEC 24772, Anforderungen nach EARS und einem Lernlog, steht im Repo [cleancode](https://github.com/DirkMueller8/cleancode). Diese Demo ist die auf 30 Minuten gekürzte Fassung davon.
 
+### Abgrenzung zu cleancode
+
+| Prinzip aus cleancode | In dieser Demo |
+|---|---|
+| Spezifikation vor Code, prüfbare Kriterien, jedes Kriterium hat einen Test | übernommen (`SPEC.md`, AK-Nummern in den Testnamen) |
+| Leitplanken mit Vorrang: Tests nie abschwächen, Warnungen nie unterdrücken | übernommen |
+| Gleitkommazahlen nie mit `==` vergleichen (ISO/IEC 24772) | übernommen, Toleranz steht in der Spezifikation |
+| Bei Widerspruch zwischen Anforderung und Leitplanke anhalten und fragen | übernommen |
+| Umgebung (Version, Befehle) in `CLAUDE.md` | übernommen |
+| Plan mit Freigabe vor dem Bauen | bewusst weggelassen, kostet Demo-Zeit |
+| Eingaben validieren, Fehler nicht verschlucken | bewusst weggelassen, Randfälle sind ausgeklammert |
+| Lernlog, Glossar, Status-Lebenszyklus, generierte Doku | bewusst weggelassen, zu schwer für 30 Minuten |
+
 ## Lizenz
 
 Noch nicht festgelegt.
